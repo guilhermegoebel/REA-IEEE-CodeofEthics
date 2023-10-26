@@ -1,29 +1,31 @@
 function checkAnswers() {
-    const questions = document.querySelectorAll(".question");
+    const answers = {
+        q1: '1',
+        q2: '1',
+        q3: '6',
+        q4: '7',
+        q5: '2',
+        q6: '3',
+        q7: '4',
+        q8: '5',
+        q9: '1',
+        q10: '7'
+    };
+
     let correctAnswers = 0;
 
-    for (let i = 0; i < questions.length; i++) {
-        const options = questions[i].querySelectorAll('input[type="radio"]');
-        const userAnswer = getSelectedAnswer(options);
-        const questionNumber = i + 1;
-
-        if (userAnswer === 1) {
+    for (const question in answers) {
+        const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+        const parentQuestion = selectedAnswer.closest('.question');
+        
+        if (selectedAnswer && selectedAnswer.value === answers[question]) {
+            parentQuestion.style.backgroundColor = 'lightgreen';
             correctAnswers++;
-            questions[i].style.backgroundColor = "#6eff6e"; 
         } else {
-            questions[i].style.backgroundColor = "#ff6e6e"; 
+            parentQuestion.style.backgroundColor = 'lightcoral';
         }
     }
 
-    const resultElement = document.getElementById("result");
-    resultElement.innerHTML = `Você acertou ${correctAnswers} de ${questions.length} questões.`;
-}
-
-function getSelectedAnswer(options) {
-    for (let i = 0; i < options.length; i++) {
-        if (options[i].checked) {
-            return parseInt(options[i].value);
-        }
-    }
-    return 0; 
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `Você acertou ${correctAnswers} de 10 questões.`;
 }
